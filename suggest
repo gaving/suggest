@@ -1,0 +1,5 @@
+#!/usr/bin/env node
+
+root = __dirname;
+
+require("./lib/suggest")
