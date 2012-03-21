@@ -13,6 +13,7 @@
         "colors": "*",
         "underscore": "*",
         "restler": "*",
-        "optimist": "*"
+        "optimist": "*",
+        "coffee-script": "*"
     }
 }
