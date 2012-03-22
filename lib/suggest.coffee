@@ -9,7 +9,7 @@ argv = require("optimist").argv
 _.templateSettings = interpolate: /\{\{(.+?)\}\}/g
 query = argv._.join(" ")
 
-rest.get("http://www.google.com/s", query: 
+rest.get("https://www.google.com/s", query: 
   sugexp: "pfwl"
   cp: "15"
   q: query
