@@ -1,21 +1,32 @@
 {
-    "name": "suggest",
-    "version": "0.0.1",
-    "author": "Gavin Gilmour <gavin@brokentrain.net>",
-    "directories": {
-        "lib": "."
-    },
-    "engines": {
-        "node": "0.6.0"
-    },
-    "dependencies": {
-        "node.io": "*",
-        "colors": "*",
-        "underscore": "*",
-        "restler": "*",
-        "optimist": "*",
-        "coffee-script": "*",
-        "charm": "*",
-        "async": "*"
-    }
+  "name": "suggest",
+  "version": "0.0.1",
+  "description": "Print out suggested queries from Google",
+  "repository": {
+    "type": "git",
+    "url": "http://github.com/gaving/suggest.git"
+  },
+  "author": "Gavin Gilmour <gavin@brokentrain.net>",
+  "directories": {
+    "lib": "."
+  },
+  "engines": {
+    "node": "0.6"
+  },
+  "dependencies": {
+    "node.io": "*",
+    "colors": "*",
+    "underscore": "*",
+    "restler": "*",
+    "optimist": "*",
+    "coffee-script": "*",
+    "charm": "*",
+    "async": "*"
+  },
+  "devDependencies": {
+    "vows": "*"
+  },
+  "bin": {
+    "suggest": "./bin/suggest"
+  }
 }

@@ -1,5 +1,4 @@
 #!/usr/bin/env node
 
 require("coffee-script")
-
-require("./lib/suggest")
+require("../lib/command").run()
