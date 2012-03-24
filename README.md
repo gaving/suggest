@@ -4,9 +4,9 @@
 
 ## Usage
 
-  % suggest
-  Suggest queries from Google.
-  Usage: suggest [query]
+    % suggest
+    Suggest queries from Google.
+    Usage: suggest [query]
 
-  Options:
-    -i, --interactive  Search as you type
+    Options:
+      -i, --interactive  Search as you type
