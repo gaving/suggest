@@ -10,41 +10,48 @@ argv = require("optimist")
     .describe('i', 'Search as you type')
     .argv
 
-_.templateSettings = interpolate: /\{\{(.+?)\}\}/g
-
-fetch = (query) ->
-    rest.get("https://www.google.com/s", query: 
-      sugexp: "pfwl"
-      q: query
+class Suggest
+  constructor: () ->
+    @url = "https://www.google.com/s"
+    _.templateSettings = interpolate: /\{\{(.+?)\}\}/g
+  suggest: (query) ->
+    rest.get(@url,
+      query: q: query
+      parser: (data, cb) ->
+        cb JSON.parse(data.replace("window.google.ac.h", "").replace(/\((.+?)\)/g, "$1"))[1]
     ).on "complete", (result, response) ->
-      if result instanceof Error
-        sys.puts "Error: " + result.message
-      else
-        _.each JSON.parse(result.replace("window.google.ac.h", "").replace(/\((.+?)\)/g, "$1"))[1], (term) ->
+      sys.puts result.message.toString().red if result instanceof Error
+      unless result instanceof Error
+        _.each result, (term) ->
           sys.puts _.template("※  {{ term }}")(term: term[0].green)
+  interactive: ->
+    t = this
+    q = ''
+    chrm = require("charm")(process)
+    chrm
+      .reset()
+      .cursor(false)
+      .write('➡ '.blue)
+      .on("^C", process.exit)
+      .on('^D', ->
+         q = ''
+         chrm.reset()
+          .write('➡ '.blue))
+      .on("data", (c) ->
+         q = q.substring(0, q.length - 1) if c[0] == 127
+         q += c unless c[0] == 127
+         chrm
+           .reset()
+           .write(_.template("{{ prompt }} {{ term }}")(prompt: '➡'.blue, term: q.red))
+           .position(0, 3)
+         t.suggest q if q.length > 0)
+
+sug = new Suggest
 
 if argv.i
-    charm = require("charm")(process)
-    q = ''
-    charm
-        .reset()
-        .cursor(false)
-        .move(0, 0)
-        .foreground('red')
-        .write('➡ '.blue)
-        .on("^C", process.exit)
-        .on('^D', ->
-            q = ''
-            charm.reset())
-        .on("data", (c) ->
-            q = q.substring(0, q.length - 1) if c[0] == 127
-            q += c unless c[0] == 127
-            charm
-                .reset()
-                .move(0, 0)
-                .foreground('red')
-                .write('➡ '.blue + q)
-                .position(0, 3)
-            fetch q if q.length > 0)
+  sug.interactive()
 else
-    fetch(argv._.join(" "))
+  sug.suggest(argv._.join(" "))
+
+
+# vim:ft=coffee ts=2 sw=2 et :
