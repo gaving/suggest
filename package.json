@@ -15,6 +15,7 @@
         "restler": "*",
         "optimist": "*",
         "coffee-script": "*",
-        "charm": "*"
+        "charm": "*",
+        "async": "*"
     }
 }
